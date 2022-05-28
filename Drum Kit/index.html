@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css"/>
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <title>Space Drum Kit</title>
+</head>
+<body>
+    <h1>Drums in Space</h1>
+<div class="keys">
+    <div data-key='65' class="key">
+        <kbd>A</kbd>
+        <span class="sound">clap</span>  
+    </div>
+    <div data-key="83" class="key">
+        <kbd>S</kbd>
+        <span class="sound">Boom</span>
+    </div>
+    <div data-key="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">Snare</span>
+    </div>
+    <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">Hihate</span>
+    </div>
+    <div data-key="71" class="key">
+        <kbd>G</kbd>
+        <span class="sound">Tom</span>
+    </div>
+    <div data-key="72" class="key">
+        <kbd>H</kbd>
+        <span class="sound">Crash</span>
+    </div>
+    <div data-key="74" class="key">
+        <kbd>J</kbd>
+        <span class="sound">Splash</span>
+    </div>
+    <div data-key="75" class="key">
+        <kbd>K</kbd>
+        <span class="sound">Ride</span>
+    </div>
+    <div data-key="76" class="key">
+        <kbd>L</kbd>
+        <span class="sound">Kick</span>
+    </div>
+</div>
+
+<audio data-key="65" src="./audio/clap.wav"></audio>
+<audio data-key="83" src="./audio/BOOM.wav"></audio>
+<audio data-key="68" src="./audio/DRUM MACHINES/606 Basic/606-snare1.wav"></audio>
+<audio data-key="70" src="./audio/DRUM MACHINES/909 Extended/909-HiHatClosed-D2.wav"></audio>
+<audio data-key="71" src="./audio/DRUM MACHINES/Alesis HR16/TOM1.wav"></audio>
+<audio data-key="72" src="./audio/curecrash.wav"></audio>
+<audio data-key="74" src="./audio/SPLASH TD_1.wav"></audio>
+<audio data-key="75" src="./audio/REAL LIVE KITS/Big and Heavy Real Drum Kit/RIDE.wav"></audio>
+<audio data-key="76" src="./audio/909-Kick-T3A0DA.wav"></audio>
+
+<script> 
+    function playSound(e) {
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+        if(!audio) return; //stop the function from running all together
+        audio.currentTime= 0; // rewind to the start
+        audio.play();
+        key.classList.add('playing');
+    }
+    function removeTransition(e) {
+        if(e.propertyName !== 'transform') return; // skip it if it's not a transform
+        this.classList.remove('playing');
+    }
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+    window.addEventListener('keydown', playSound);
+</script>
+</body>
+</html>
